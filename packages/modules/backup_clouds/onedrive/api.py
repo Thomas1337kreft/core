@@ -4,7 +4,7 @@ import json
 import paho.mqtt.publish as publish
 import base64
 
-from helpermodules.utils.error_handling import ImportErrorContext
+from helpermodules.utils import ImportErrorContext
 with ImportErrorContext():
     import msal
 

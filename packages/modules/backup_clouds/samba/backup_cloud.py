@@ -5,7 +5,7 @@ import io
 import re
 import socket
 
-from helpermodules.utils.error_handling import ImportErrorContext
+from helpermodules.utils import ImportErrorContext
 with ImportErrorContext():
     from smb.SMBConnection import SMBConnection
 

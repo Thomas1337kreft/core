@@ -3,7 +3,7 @@ import logging
 import time
 from helpermodules.logger import ModifyLoglevelContext
 
-from helpermodules.utils.error_handling import CP_ERROR, ErrorTimerContext
+from helpermodules.utils import CP_ERROR, ErrorTimerContext
 from modules.common.abstract_chargepoint import AbstractChargepoint
 from modules.common.component_context import SingleComponentUpdateContext
 from modules.common.component_state import ChargepointState

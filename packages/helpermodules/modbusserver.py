@@ -5,7 +5,7 @@ from collections import defaultdict
 import struct
 from typing import Optional
 
-from helpermodules.utils.error_handling import ImportErrorContext
+from helpermodules.utils import ImportErrorContext
 with ImportErrorContext():
     from umodbus import conf
     from umodbus.server.tcp import RequestHandler, get_server

@@ -1,5 +1,5 @@
 # flake8: noqa
-from helpermodules.utils.error_handling import ImportErrorContext
+from helpermodules.utils import ImportErrorContext
 with ImportErrorContext():
     from google.protobuf.internal import containers as _containers
     from google.protobuf import descriptor as _descriptor
@@ -8,8 +8,10 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+
 class NewRequest(_message.Message):
     __slots__ = ("token", "type", "config")
+
     class ConfigEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -23,13 +25,16 @@ class NewRequest(_message.Message):
     token: str
     type: str
     config: _containers.ScalarMap[str, str]
-    def __init__(self, token: _Optional[str] = ..., type: _Optional[str] = ..., config: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, token: _Optional[str] = ..., type: _Optional[str] = ...,
+                 config: _Optional[_Mapping[str, str]] = ...) -> None: ...
+
 
 class NewReply(_message.Message):
     __slots__ = ("vehicle_id",)
     VEHICLE_ID_FIELD_NUMBER: _ClassVar[int]
     vehicle_id: int
     def __init__(self, vehicle_id: _Optional[int] = ...) -> None: ...
+
 
 class SoCRequest(_message.Message):
     __slots__ = ("token", "vehicle_id")
@@ -38,6 +43,7 @@ class SoCRequest(_message.Message):
     token: str
     vehicle_id: int
     def __init__(self, token: _Optional[str] = ..., vehicle_id: _Optional[int] = ...) -> None: ...
+
 
 class SoCReply(_message.Message):
     __slots__ = ("soc",)

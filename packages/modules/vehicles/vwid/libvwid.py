@@ -8,7 +8,7 @@ import secrets
 import logging
 import json
 
-from helpermodules.utils.error_handling import ImportErrorContext
+from helpermodules.utils import ImportErrorContext
 with ImportErrorContext():
     import lxml.html
 
