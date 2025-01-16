@@ -37,6 +37,7 @@ class Loadvars:
     def _set_values(self) -> List[str]:
         """Threads, um Werte von Geräten abzufragen"""
         modules_threads: List[threading.Thread] = []
+        modules_second_threads: List[threading.Thread] = []
         for item in data.data.system_data.values():
             try:
                 if isinstance(item, AbstractDevice):
@@ -46,11 +47,19 @@ class Loadvars:
                 log.exception(f"Fehler im loadvars-Modul bei Element {item}")
         for cp in data.data.cp_data.values():
             try:
-                modules_threads.append(threading.Thread(target=cp.chargepoint_module.get_values,
-                                       args=(), name=f"set values cp{cp.chargepoint_module.config.id}"))
+                if (cp.chargepoint_module.config.type == "openwb_series2_satellit" and
+                        cp.chargepoint_module.config.configuration.duo_num == 1):
+                    modules_second_threads.append(
+                        threading.Thread(target=cp.chargepoint_module.get_values,
+                                         args=(), name=f"get values cp{cp.chargepoint_module.config.id}"))
+                else:
+                    modules_threads.append(
+                        threading.Thread(target=cp.chargepoint_module.get_values,
+                                         args=(), name=f"set values cp{cp.chargepoint_module.config.id}"))
             except Exception:
                 log.exception(f"Fehler im loadvars-Modul bei Element {cp.num}")
-        return joined_thread_handler(modules_threads, data.data.general_data.data.control_interval/3)
+        return (joined_thread_handler(modules_threads, data.data.general_data.data.control_interval/3) +
+                joined_thread_handler(modules_second_threads, data.data.general_data.data.control_interval/6))
 
     def _update_values_of_level(self, elements, not_finished_threads: List[str]) -> None:
         """Threads, um von der niedrigsten Ebene der Hierarchie Werte ggf. miteinander zu verrechnen und zu

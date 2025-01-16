@@ -3,7 +3,6 @@ import logging
 import time
 from typing import Optional
 
-from control import data
 from helpermodules.utils.error_handling import CP_ERROR, ErrorTimerContext
 from modules.chargepoints.openwb_series2_satellit.config import OpenWBseries2Satellit
 from modules.common import modbus
@@ -24,8 +23,6 @@ class ChargepointModule(AbstractChargepoint):
         "type": "openWB Satellit",
         "versions": ["2.0"]
     }
-    # 1/3 des Regelintervalls für Abfrage der Werte, davon die Hälfte je Duo-LP
-    CP1_DELAY = data.data.general_data.data.control_interval / 6
     CP1_DELAY_STARTUP = 4
     ID_PHASE_SWITCH_UNIT = 3
 
@@ -76,7 +73,6 @@ class ChargepointModule(AbstractChargepoint):
             if self.version is not None:
                 with self.client_error_context:
                     try:
-                        self.delay_second_cp(self.CP1_DELAY)
                         with self._client.client:
                             self._client.check_hardware(self.fault_state)
                             if self.version is False:
@@ -113,7 +109,6 @@ class ChargepointModule(AbstractChargepoint):
             with SingleComponentUpdateContext(self.fault_state, update_always=False):
                 with self.client_error_context:
                     try:
-                        self.delay_second_cp(self.CP1_DELAY)
                         with self._client.client:
                             self._client.check_hardware(self.fault_state)
                             if self.version:
