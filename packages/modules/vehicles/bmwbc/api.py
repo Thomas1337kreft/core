@@ -10,7 +10,7 @@ import datetime
 import logging
 from typing import Union
 
-from helpermodules.utils import ImportErrorContext
+from helpermodules.utils.import_error import ImportErrorContext
 with ImportErrorContext():
     from bimmer_connected.api.client import MyBMWClientConfiguration
     from bimmer_connected.api.authentication import MyBMWAuthentication

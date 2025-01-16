@@ -5,7 +5,7 @@ import logging
 import datetime
 from typing import Dict, List, Optional, Tuple, TypeVar, Union
 
-from helpermodules.utils import ImportErrorContext
+from helpermodules.utils.import_error import ImportErrorContext
 with ImportErrorContext():
     from dateutil.relativedelta import relativedelta
 

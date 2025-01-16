@@ -1,5 +1,5 @@
 # flake8: noqa
-from helpermodules.utils import ImportErrorContext
+from helpermodules.utils.import_error import ImportErrorContext
 with ImportErrorContext():
     from google.protobuf.internal import containers as _containers
     from google.protobuf import descriptor as _descriptor

@@ -1,6 +1,6 @@
 import logging
 
-from helpermodules.utils import CP_ERROR, ErrorTimerContext
+from helpermodules.utils.error_timer import CP_ERROR, ErrorTimerContext
 from modules.chargepoints.mqtt.config import Mqtt
 from modules.common.abstract_chargepoint import AbstractChargepoint
 from modules.common.abstract_device import DeviceDescriptor

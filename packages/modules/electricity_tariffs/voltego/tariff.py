@@ -4,7 +4,7 @@ import logging
 from typing import Dict
 from requests.exceptions import HTTPError
 
-from helpermodules.utils import ImportErrorContext
+from helpermodules.utils.import_error import ImportErrorContext
 with ImportErrorContext():
     import pytz
 

@@ -4,7 +4,7 @@
 # source: vehicle.proto
 # Protobuf Python Version: 4.25.0
 """Generated protocol buffer code."""
-from helpermodules.utils import ImportErrorContext
+from helpermodules.utils.import_error import ImportErrorContext
 with ImportErrorContext():
     from google.protobuf import descriptor as _descriptor
     from google.protobuf import descriptor_pool as _descriptor_pool
