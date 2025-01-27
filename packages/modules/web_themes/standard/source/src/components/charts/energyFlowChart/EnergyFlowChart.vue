@@ -681,6 +681,7 @@ const svgRectWidth = computed(
   align-items: center;
   width: 100%;
   height: 100%;
+  user-select: none;
 }
 
 /* ------ */
@@ -776,12 +777,18 @@ rect {
 }
 
 @keyframes dash {
+  from {
+    stroke-dashoffset: 20;
+  }
   to {
-    stroke-dashoffset: -20;
+    stroke-dashoffset: 0;
   }
 }
 
 @keyframes dashReverse {
+  from {
+    stroke-dashoffset: 0;
+  }
   to {
     stroke-dashoffset: 20;
   }

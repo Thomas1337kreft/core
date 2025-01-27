@@ -5,6 +5,7 @@
     :animated="animated"
     control-color="primary"
     infinite
+    @update:model-value="handleSlideChange"
     padding
     :navigation="groupedItems.length > 1"
     :arrows="groupedItems.length > 1 && $q.screen.gt.xs"
@@ -19,7 +20,12 @@
       :name="index"
       class="row no-wrap justify-center carousel-slide"
     >
-      <div v-for="item in group" :key="item" class="item-container">
+      <div
+        v-for="item in group"
+        :key="item"
+        class="item-container"
+        :style="`min-height: ${maxCardHeight}px`"
+      >
         <slot name="item" :item="item"></slot>
       </div>
     </q-carousel-slide>
@@ -27,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue';
+import { ref, computed, watch, nextTick, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 
 const props = defineProps<{
@@ -78,6 +84,56 @@ watch(
     animated.value = true;
   },
 );
+
+const handleSlideChange = () => {
+  const currentScroll = window.scrollY;
+  nextTick(() => {
+    updateMaxCardHeight();
+    observeCardChanges();
+    window.scrollTo(0, currentScroll);
+  });
+};
+
+const maxCardHeight = ref<number>(0);
+
+const updateMaxCardHeight = () => {
+  const cards = document.querySelectorAll('.q-card');
+  const heights = Array.from(cards).map(
+    (card) => (card as HTMLElement).offsetHeight,
+  );
+  maxCardHeight.value = Math.max(...heights);
+};
+
+const observeCardChanges = () => {
+  const observer = new MutationObserver(() => {
+    updateMaxCardHeight();
+  });
+  const cards = document.querySelectorAll('.q-card');
+  cards.forEach((card) => {
+    observer.observe(card, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
+  });
+};
+
+onMounted(() => {
+  nextTick(() => {
+    updateMaxCardHeight();
+    observeCardChanges();
+  });
+});
+
+watch(
+  () => props.items,
+  () => {
+    nextTick(() => {
+      updateMaxCardHeight();
+      observeCardChanges();
+    });
+  },
+);
 </script>
 
 <style scoped>
@@ -89,5 +145,6 @@ watch(
 }
 .carousel-height {
   min-height: fit-content;
+  height: 100%;
 }
 </style>
